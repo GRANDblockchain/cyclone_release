@@ -1,0 +1,75 @@
+version: '3.9'
+
+networks:
+  sai:
+    name: 'sai'
+
+services:
+  cyclone:
+    image: 'webmakom/cyclone:0.0.3'
+    restart: always
+    ports:
+      - "3231:3231" # http api
+      - "3203:3203" # p2p
+    environment:
+      CYCLONE_LABEL: 'n1'
+      CYCLONE_PK: 'L29N56QDAkkwb2kNWKKFbgJXeyomPAVv9QfBXv4JW6mbyXCPAaJ1'
+      CYCLONE_PUB: '03197b470c08f97a7c4f66cd9a99df2ce39cd3c647763b664dd8666d00ee4ebdac'
+      CYCLONE_ADDR: '1BBFY1fQBmGhexTLSx1zZsGxwLnLboEKeX'
+      CYCLONE_PEERS: '144.91.108.232:3203'
+    depends_on:
+      - storage
+      - vm
+      - crypto
+    networks:
+      - sai
+
+  vm:
+    image: 'webmakom/vm:0.0.3'
+    restart: always
+    ports:
+      - "8039:8039" # http api
+    depends_on:
+      - storage
+    networks:
+      - sai
+
+  gw:
+    image: 'webmakom/gw:0.0.3'
+    restart: always
+    ports:
+      - "9231:9231" # http api
+    depends_on:
+      - storage
+      - crypto
+#      - cyclone
+    networks:
+      - sai
+
+  crypto:
+    image: 'webmakom/crypto:0.0.1'
+    restart: always
+    ports:
+      - "3305:3305" # http api
+    networks:
+      - sai
+
+  storage:
+    image: 'webmakom/storage:0.0.2'
+    ports:
+      - 8801:8801
+      - 8802:8802
+    depends_on:
+      - mongo-db
+    networks:
+      - sai
+
+  mongo-db:
+    image: mongo:latest
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - sai
+
+volumes:
+  mongo_data: {}
