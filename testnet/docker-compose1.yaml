@@ -13,7 +13,10 @@ services:
       - "3203:3203" # p2p
     environment:
       CYCLONE_LABEL: 'p1'
-      CYCLONE_PEERS: '144.91.108.232:3203'
+      CYCLONE_PEERS: '164.68.127.67:3203,164.68.127.58:3203'
+      CYCLONE_PK: 'KwUjLXVF19uTjp5FnQrb4vmiEVQYgApdqAJDTUQ1T9C1wXirTTHS'
+      CYCLONE_PUB: '020e119b3e3799afc17f7371c1a10a6fd38ced2d6662a1528d6675c8322de19234'
+      CYCLONE_ADDR: '1Mxn3tAYPWogMqfD1geqiaqpAnjguPYAXF'
     depends_on:
       - storage
       - vm

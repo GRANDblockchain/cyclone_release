@@ -12,8 +12,11 @@ services:
       - "3231:3231" # http api
       - "3203:3203" # p2p
     environment:
-      CYCLONE_LABEL: 'p1'
-      CYCLONE_PEERS: '144.91.108.232:3203'
+      CYCLONE_LABEL: 'p2'
+      CYCLONE_PEERS: '164.68.127.226:3203,164.68.127.58:3203'
+      CYCLONE_PK: 'KzwvwCC42X3BPa1wGQSsezQG9XWnUhLye9Fb9fAhYqzXiitmJMCm'
+      CYCLONE_PUB: '0221c38bdecb94fea6729acc83b8aee37dd1bd6b43bffd92444e1e304e17605062'
+      CYCLONE_ADDR: '1HSqakjKkwBR2YtXkxfUsfu2y7QEm1pDjN'
     depends_on:
       - storage
       - vm
