@@ -1,12 +1,8 @@
 version: '3.9'
 
-networks:
-  sai:
-    name: 'sai'
-
 services:
   cyclone:
-    image: 'webmakom/cyclone:0.0.4'
+    image: 'webmakom/cyclone:0.0.10'
     restart: always
     ports:
       - "3231:3231" # http api
@@ -21,56 +17,53 @@ services:
       - storage
       - vm
       - crypto
-    networks:
-      - sai
+    network_mode: 'host'
 
   vm:
-    image: 'webmakom/vm:0.0.4'
+    image: 'webmakom/vm:0.0.8'
     restart: always
     ports:
       - "8039:8039" # http api
+    environment:
+      VM_GENESIS_NATIVE: '1Mxn3tAYPWogMqfD1geqiaqpAnjguPYAXF:100000,1HSqakjKkwBR2YtXkxfUsfu2y7QEm1pDjN:100000,1L3cxnDxCYUuyzHgu9N4cexR7zeSEoLJvo:100000'
+      VM_GENESIS_VALIDATORS: '1Mxn3tAYPWogMqfD1geqiaqpAnjguPYAXF,1HSqakjKkwBR2YtXkxfUsfu2y7QEm1pDjN,1L3cxnDxCYUuyzHgu9N4cexR7zeSEoLJvo'
     depends_on:
       - storage
-    networks:
-      - sai
+    network_mode: 'host'
 
   gw:
-    image: 'webmakom/gw:0.0.4'
+    image: 'webmakom/gw:0.0.7'
     restart: always
     ports:
       - "9231:9231" # http api
     depends_on:
       - storage
       - crypto
-    networks:
-      - sai
+    network_mode: 'host'
 
   crypto:
-    image: 'webmakom/crypto:0.0.1'
+    image: 'webmakom/crypto:0.0.2'
     restart: always
     ports:
       - "3305:3305" # http api
-    networks:
-      - sai
+    network_mode: 'host'
 
   storage:
-    image: 'webmakom/storage:0.0.2'
+    image: 'webmakom/storage:0.0.4'
     ports:
       - 8801:8801
       - 8802:8802
     depends_on:
       - mongo-db
-    networks:
-      - sai
+    network_mode: 'host'
 
   mongo-db:
     image: mongo:latest
     volumes:
       - mongo_data:/data/db
-    networks:
-      - sai
+    network_mode: 'host'
     ports:
-      - 27018:27017
+      - 27017:27017
 
 volumes:
   mongo_data: {}
