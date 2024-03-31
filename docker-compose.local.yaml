@@ -5,45 +5,45 @@ networks:
     name: 'sai'
 
 services:
-#  cyclone:
-#    image: 'webmakom/cyclone:0.0.4'
-#    restart: always
-#    ports:
-#      - "3231:3231" # http api
-#      - "3203:3203" # p2p
-#    environment:
-#      CYCLONE_LABEL: 'n1'
-#      CYCLONE_PEERS: '144.91.108.232:3203'
-#    depends_on:
-#      - storage
-#      - vm
-#      - crypto
-#    networks:
-#      - sai
+  cyclone:
+    image: 'webmakom/cyclone:0.0.10'
+    restart: always
+    ports:
+      - "3231:3231" # http api
+      - "3203:3203" # p2p
+    environment:
+      CYCLONE_LABEL: 'n1'
+      CYCLONE_PEERS: '144.91.108.232:3203'
+    depends_on:
+      - storage
+      - vm
+      - crypto
+    networks:
+      - sai
 
-#  vm:
-#    image: 'webmakom/vm:0.0.4'
-#    restart: always
-#    ports:
-#      - "8039:8039" # http api
-#    depends_on:
-#      - storage
-#    networks:
-#      - sai
+  vm:
+    image: 'webmakom/vm:0.0.8'
+    restart: always
+    ports:
+      - "8039:8039" # http api
+    depends_on:
+      - storage
+    networks:
+      - sai
 
-#  gw:
-#    image: 'webmakom/gw:0.0.4'
-#    restart: always
-#    ports:
-#      - "9231:9231" # http api
-#    depends_on:
-#      - storage
-#      - crypto
-#    networks:
-#      - sai
+  gw:
+    image: 'webmakom/gw:0.0.7'
+    restart: always
+    ports:
+      - "9231:9231" # http api
+    depends_on:
+      - storage
+      - crypto
+    networks:
+      - sai
 
   crypto:
-    image: 'webmakom/crypto:0.0.1'
+    image: 'webmakom/crypto:0.0.2'
     restart: always
     ports:
       - "3305:3305" # http api
@@ -51,7 +51,7 @@ services:
       - sai
 
   storage:
-    image: 'webmakom/storage:0.0.2'
+    image: 'webmakom/storage:0.0.4'
     ports:
       - 8801:8801
       - 8802:8802
