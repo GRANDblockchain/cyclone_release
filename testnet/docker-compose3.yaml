@@ -1,13 +1,34 @@
 version: '3.9'
 
+networks:
+  boba:
+    name: 'boba'
+    internal: false
+    driver: 'bridge'
+  nananana:
+    name: 'nananana'
+    internal: true
 
 services:
+
+  crypto:
+    hostname: 'crypto'
+    image: 'webmakom/crypto:0.0.2'
+    restart: always
+    ports:
+      - "3305:3305" # http api
+    network_mode: 'host'
+    deploy:
+      resources:
+        limits:
+          memory: 100mb
+
   cyclone:
-    image: 'webmakom/cyclone:0.0.10'
+    image: 'webmakom/cyclone:0.0.19'
     restart: always
     ports:
       - "3231:3231" # http api
-      - "3203:3203" # p2p
+      - "3203:3203/udp" # p2p
     environment:
       CYCLONE_LABEL: 'p3'
       CYCLONE_PEERS: '164.68.127.67:3203,164.68.127.226:3203'
@@ -15,56 +36,67 @@ services:
       CYCLONE_PUB: '02f0e0b631078574a0064d92ac449d4e4ef70b8f213f3c05fab109e4f017dba0ad'
       CYCLONE_ADDR: '1L3cxnDxCYUuyzHgu9N4cexR7zeSEoLJvo'
     depends_on:
-      - storage
       - vm
       - crypto
     network_mode: 'host'
+    deploy:
+      resources:
+        limits:
+          memory: 500mb
 
   vm:
-    image: 'webmakom/vm:0.0.8'
+    image: 'webmakom/vm:0.0.14'
     restart: always
     ports:
       - "8039:8039" # http api
     environment:
       VM_GENESIS_NATIVE: '1Mxn3tAYPWogMqfD1geqiaqpAnjguPYAXF:100000,1HSqakjKkwBR2YtXkxfUsfu2y7QEm1pDjN:100000,1L3cxnDxCYUuyzHgu9N4cexR7zeSEoLJvo:100000'
       VM_GENESIS_VALIDATORS: '1Mxn3tAYPWogMqfD1geqiaqpAnjguPYAXF,1HSqakjKkwBR2YtXkxfUsfu2y7QEm1pDjN,1L3cxnDxCYUuyzHgu9N4cexR7zeSEoLJvo'
-    depends_on:
-      - storage
     network_mode: 'host'
+    deploy:
+      resources:
+        limits:
+          memory: 500mb
 
   gw:
-    image: 'webmakom/gw:0.0.7'
+    image: 'webmakom/gw:0.0.10'
     restart: always
     ports:
       - "9231:9231" # http api
     depends_on:
-      - storage
       - crypto
     network_mode: 'host'
-
-  crypto:
-    image: 'webmakom/crypto:0.0.2'
-    restart: always
-    ports:
-      - "3305:3305" # http api
-    network_mode: 'host'
+    deploy:
+      resources:
+        limits:
+          memory: 100mb
 
   storage:
-    image: 'webmakom/storage:0.0.4'
+    hostname: 'storage'
+    image: 'webmakom/storage:0.0.3'
     ports:
-      - 8801:8801
-      - 8802:8802
+      - '8801:8801'
+      - '8802:8802'
     depends_on:
       - mongo-db
-    network_mode: 'host'
+    networks:
+      - boba
+      - nananana
+    deploy:
+      resources:
+        limits:
+          memory: 500mb
 
   mongo-db:
+    hostname: 'mongo-db'
     image: mongo:latest
     volumes:
-      - mongo_data:/data/db
-    network_mode: 'host'
+      - /etc/cyclone-db:/data/db
     ports:
-      - 27017:27017
-
-volumes:
-  mongo_data: {}
+      - '27017:27017'
+    networks:
+      - nananana
+    deploy:
+      resources:
+        limits:
+          memory: 3000mb
