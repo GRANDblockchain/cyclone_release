@@ -10,7 +10,7 @@ networks:
 services:
 
   cyclone:
-    image: 'webmakom/cyclone:0.0.21'
+    image: 'webmakom/cyclone:0.0.22'
     restart: always
     ports:
       - "3231:3231" # http api
