@@ -24,7 +24,7 @@ services:
           memory: 100mb
 
   cyclone:
-    image: 'webmakom/cyclone:0.0.22'
+    image: 'webmakom/cyclone:0.0.26'
     restart: always
     ports:
       - "3231:3231" # http api
@@ -39,9 +39,6 @@ services:
       - vm
       - crypto
     network_mode: 'host'
-#    networks:
-#      - nananana
-#      - pavlic
     deploy:
       resources:
         limits:

@@ -10,11 +10,11 @@ networks:
 services:
 
   cyclone:
-    image: 'webmakom/cyclone:0.0.22'
+    image: 'webmakom/cyclone:0.0.26'
     restart: always
-    ports:
-      - "3231:3231" # http api
-      - "3203:3203/udp" # p2p
+#    ports:
+#      - "3231:3231" # http api
+#      - "3203:3203/udp" # p2p
     environment:
       CYCLONE_LABEL: 'local.1'
       CYCLONE_PEERS: '164.68.127.226:3203'
