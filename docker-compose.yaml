@@ -29,7 +29,7 @@ services:
 
 
   vm:
-    image: 'webmakom/vm:0.0.14'
+    image: 'webmakom/vm:0.0.15'
     restart: always
     ports:
       - "8039:8039" # http api
