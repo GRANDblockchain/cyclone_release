@@ -9,33 +9,33 @@ networks:
 
 services:
 
-  cyclone:
-    image: 'webmakom/cyclone:0.0.26'
-    restart: always
+#  cyclone:
+#    image: 'webmakom/cyclone:0.0.28'
+#    restart: always
+##    ports:
+##      - "3231:3231" # http api
+##      - "3203:3203/udp" # p2p
+#    environment:
+#      CYCLONE_LABEL: 'local.1'
+#      CYCLONE_PEERS: '164.68.127.226:3203'
+#      CYCLONE_PK: ''
+#      CYCLONE_PUB: ''
+#      CYCLONE_ADDR: ''
+#    depends_on:
+#      - storage
+#      - vm
+#      - crypto
+#    network_mode: 'host'
+
+
+#  vm:
+#    image: 'webmakom/vm:0.0.15'
+#    restart: always
 #    ports:
-#      - "3231:3231" # http api
-#      - "3203:3203/udp" # p2p
-    environment:
-      CYCLONE_LABEL: 'local.1'
-      CYCLONE_PEERS: '164.68.127.226:3203'
-      CYCLONE_PK: ''
-      CYCLONE_PUB: ''
-      CYCLONE_ADDR: ''
-    depends_on:
-      - storage
-      - vm
-      - crypto
-    network_mode: 'host'
-
-
-  vm:
-    image: 'webmakom/vm:0.0.15'
-    restart: always
-    ports:
-      - "8039:8039" # http api
-    depends_on:
-      - storage
-    network_mode: 'host'
+#      - "8039:8039" # http api
+#    depends_on:
+#      - storage
+#    network_mode: 'host'
 
   gw:
     image: 'webmakom/gw:0.0.10'
