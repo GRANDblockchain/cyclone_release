@@ -16,10 +16,10 @@ services:
 #      - "3203:3203/udp" # p2p
     environment:
       CYCLONE_LABEL: 'local.1'
-      CYCLONE_PEERS: '164.68.127.226:3203'
-      CYCLONE_PK: '5JAFZzzTNHEmRQZVY1LHAc8V2N2ZAixZXwEx4vKiaE8Hf3rankw'
-      CYCLONE_PUB: '045657fc4ac76c7a469c7806332906b478da46d4f75a80bf4c357b83525c2e217655b41cab56f3f4d30b6263f541090110c9436ebbf0a287099c38e2a021da9ff0'
-      CYCLONE_ADDR: '14S4pCZ1Fohs4SRbRimRPShNjm7ir9Q67Q'
+      CYCLONE_PEERS: '164.68.127.226:45032'
+      CYCLONE_PK: ''
+      CYCLONE_PUB: ''
+      CYCLONE_ADDR: ''
     depends_on:
       - storage
       - vm
