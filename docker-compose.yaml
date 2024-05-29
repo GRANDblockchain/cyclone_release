@@ -1,6 +1,5 @@
 version: '3.9'
 
-
 networks:
   boba:
     name: 'boba'
@@ -9,36 +8,35 @@ networks:
 
 services:
 
-#  cyclone:
-#    image: 'webmakom/cyclone:0.0.28'
-#    restart: always
-##    ports:
-##      - "3231:3231" # http api
-##      - "3203:3203/udp" # p2p
-#    environment:
-#      CYCLONE_LABEL: 'local.1'
-#      CYCLONE_PEERS: '164.68.127.226:3203'
-#      CYCLONE_PK: ''
-#      CYCLONE_PUB: ''
-#      CYCLONE_ADDR: ''
-#    depends_on:
-#      - storage
-#      - vm
-#      - crypto
-#    network_mode: 'host'
-
-
-#  vm:
-#    image: 'webmakom/vm:0.0.15'
-#    restart: always
+  cyclone:
+    image: 'webmakom/cyclone:0.0.39'
+    restart: always
 #    ports:
-#      - "8039:8039" # http api
-#    depends_on:
-#      - storage
-#    network_mode: 'host'
+#      - "3231:3231" # http api
+#      - "3203:3203/udp" # p2p
+    environment:
+      CYCLONE_LABEL: 'local.1'
+      CYCLONE_PEERS: '164.68.127.226:3203'
+      CYCLONE_PK: '5JAFZzzTNHEmRQZVY1LHAc8V2N2ZAixZXwEx4vKiaE8Hf3rankw'
+      CYCLONE_PUB: '045657fc4ac76c7a469c7806332906b478da46d4f75a80bf4c357b83525c2e217655b41cab56f3f4d30b6263f541090110c9436ebbf0a287099c38e2a021da9ff0'
+      CYCLONE_ADDR: '14S4pCZ1Fohs4SRbRimRPShNjm7ir9Q67Q'
+    depends_on:
+      - storage
+      - vm
+      - crypto
+    network_mode: 'host'
+
+  vm:
+    image: 'webmakom/vm:0.0.28'
+    restart: always
+    ports:
+      - "8039:8039" # http api
+    depends_on:
+      - storage
+    network_mode: 'host'
 
   gw:
-    image: 'webmakom/gw:0.0.10'
+    image: 'webmakom/gw:0.0.16'
     restart: always
     ports:
       - "9231:9231" # http api
@@ -48,7 +46,7 @@ services:
     network_mode: 'host'
 
   crypto:
-    image: 'webmakom/crypto:0.0.2'
+    image: 'webmakom/crypto:0.0.5'
     restart: always
     ports:
       - "3305:3305" # http api
@@ -58,19 +56,19 @@ services:
   storage:
     image: 'webmakom/storage:0.0.3'
     ports:
-      - 8801:8801
-      - 8802:8802
+      - "8801:8801"
+      - "8802:8802"
     depends_on:
       - mongo-db
     networks:
       - boba
 
   mongo-db:
-    image: mongo:latest
+    image: mongo:7.0.8
     volumes:
       - mongo_data:/data/db
     ports:
-      - 27017:27017
+      - "27017:27017"
     networks:
       - boba
 
