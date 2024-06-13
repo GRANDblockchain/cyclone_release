@@ -1,0 +1,76 @@
+version: '3.9'
+
+networks:
+  boba:
+    name: 'boba'
+    internal: false
+    driver: 'bridge'
+
+services:
+
+#  cyclone:
+#    image: 'webmakom/cyclone:0.0.39'
+#    restart: always
+##    ports:
+##      - "3231:3231" # http api
+##      - "3203:3203/udp" # p2p
+#    environment:
+#      CYCLONE_LABEL: 'local.1'
+#      CYCLONE_PEERS: '164.68.127.226:45032'
+#      CYCLONE_PK: ''
+#      CYCLONE_PUB: ''
+#      CYCLONE_ADDR: ''
+#    depends_on:
+#      - storage
+#      - vm
+#      - crypto
+#    network_mode: 'host'
+
+#  vm:
+#    image: 'webmakom/vm:0.0.28'
+#    restart: always
+#    ports:
+#      - "8039:8039" # http api
+#    depends_on:
+#      - storage
+#    network_mode: 'host'
+
+#  gw:
+#    image: 'webmakom/gw:0.0.16'
+#    restart: always
+#    ports:
+#      - "9231:9231" # http api
+#    depends_on:
+#      - storage
+#      - crypto
+#    network_mode: 'host'
+
+  crypto:
+    image: 'webmakom/crypto:0.0.5'
+    restart: always
+    ports:
+      - "3305:3305" # http api
+    networks:
+      - boba
+
+  storage:
+    image: 'webmakom/storage:0.0.3'
+    ports:
+      - "8801:8801"
+      - "8802:8802"
+    depends_on:
+      - mongo-db
+    networks:
+      - boba
+
+  mongo-db:
+    image: mongo:7.0.8
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - boba
+
+volumes:
+  mongo_data: {}
