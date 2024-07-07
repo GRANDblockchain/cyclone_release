@@ -27,7 +27,7 @@ services:
     network_mode: 'host'
 
   vm:
-    image: 'webmakom/vm:0.0.36'
+    image: 'webmakom/vm:0.0.38'
     restart: always
     ports:
       - "8039:8039" # http api
@@ -36,7 +36,7 @@ services:
     network_mode: 'host'
 
   gw:
-    image: 'webmakom/gw:0.0.19'
+    image: 'webmakom/gw:0.0.21'
     restart: always
     ports:
       - "9231:9231" # http api
