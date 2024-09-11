@@ -9,7 +9,7 @@ networks:
 services:
 
   cyclone:
-    image: 'webmakom/cyclone:0.0.80'
+    image: 'webmakom/cyclone:0.0.81'
     restart: always
 #    ports:
 #      - "3231:3231" # http api
@@ -27,7 +27,7 @@ services:
     network_mode: 'host'
 
   vm:
-    image: 'webmakom/vm:0.0.43'
+    image: 'webmakom/vm:0.0.44'
     restart: always
     ports:
       - "8039:8039" # http api
