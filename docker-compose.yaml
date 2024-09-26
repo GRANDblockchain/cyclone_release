@@ -1,10 +1,4 @@
-version: '3.9'
-
-networks:
-  boba:
-    name: 'boba'
-    internal: false
-    driver: 'bridge'
+version: '3.3'
 
 services:
 
@@ -50,8 +44,7 @@ services:
     restart: always
     ports:
       - "3305:3305" # http api
-    networks:
-      - boba
+    network_mode: 'host'
 
   storage:
     image: 'webmakom/storage:0.0.3'
@@ -60,8 +53,7 @@ services:
       - "8802:8802"
     depends_on:
       - mongo-db
-    networks:
-      - boba
+    network_mode: 'host'
 
   mongo-db:
     image: mongo:7.0.8
@@ -69,8 +61,7 @@ services:
       - mongo_data:/data/db
     ports:
       - "27017:27017"
-    networks:
-      - boba
+    network_mode: 'host'
 
 volumes:
   mongo_data: {}

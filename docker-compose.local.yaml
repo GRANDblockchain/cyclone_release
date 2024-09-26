@@ -1,8 +1,7 @@
-version: '3.9'
+version: '3.3'
 
 networks:
   boba:
-    name: 'boba'
     internal: false
     driver: 'bridge'
 
